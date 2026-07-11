@@ -1,22 +1,23 @@
-from operator import add
+
 
 
 def load_users():
     users = {}
 
-    file = open("users.txt", "r")
+    try:
+        file = open("users.txt", "r")
 
-    for line in file:
-        username, password = line.strip().split(",")
-        users[username] = password
+        for line in file:
+            username, password = line.strip().split(",")
+            users[username] = password
 
-    file.close()
+        file.close()
+
+    except FileNotFoundError:
+        file = open("users.txt", "w")
+        file.close()
 
     return users
-
-
-users = load_users()
-
 def save_users():
     file = open("users.txt", "w")
 
@@ -46,10 +47,9 @@ def register():
         password = input("Create password > ")
         users[username] = password
         print("Account Created")
-        users[username] = password
+
         save_users()
-
-
+users = load_users()
 while True:
     print("\n<<<< MENU >>>>")
     print("1. Login")
@@ -70,4 +70,6 @@ while True:
 
     else:
         print("Invalid choice")
+
+
 
